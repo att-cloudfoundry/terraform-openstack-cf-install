@@ -251,3 +251,11 @@ output "install_docker_services" {
 output "key_path" {
   value = "${var.key_path}"
 }
+
+output "http_proxy" {
+  value = "${var.http_proxy}"
+}
+
+output "https_proxy" {
+  value = "${var.https_proxy}"
+}

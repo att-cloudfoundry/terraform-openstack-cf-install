@@ -40,3 +40,10 @@ variable "image_name" {
 variable "flavor_name" {
   default = "m1.medium"
 }
+
+variable "http_proxy" {
+  default = ""
+}
+variable "https_proxy" {
+  default = ""
+}

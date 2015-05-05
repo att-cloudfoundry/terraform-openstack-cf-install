@@ -24,6 +24,8 @@ CF_BOSHWORKSPACE_VERSION=${10}
 CF_DOMAIN=${11}
 DOCKER_SUBNET=${12}
 INSTALL_DOCKER=${13}
+HTTP_PROXY=${14}
+HTTPS_PROXY=${15}
 
 
 boshDirectorHost="${IPMASK}.2.4"
@@ -32,6 +34,19 @@ cfReleaseVersion="207"
 cd $HOME
 (("$?" == "0")) ||
   fail "Could not find HOME folder, terminating install."
+
+
+# Setup proxy
+if [[ $HTTP_PROXY != "" || $HTTPS_PROXY != "" ]]; then
+  if [[ ! -f /etc/profile.d/http_proxy.sh ]]; then
+    sudo cat <<EOF > /etc/profile.d/http_proxy.sh
+#!/bin/bash
+export http_proxy=${HTTP_PROXY}
+export https_proxy=${HTTPS_PROXY}
+EOF
+  fi
+fi
+
 
 # Generate the key that will be used to ssh between the bastion and the
 # microbosh machine
@@ -120,6 +135,14 @@ address:
   subnet_id: ${CF_SUBNET1}
   ip: ${boshDirectorHost}
 EOF
+
+if [[ $HTTP_PROXY != ""  || $HTTPS_PROXY != ""  ]]; then
+  sudo cat <<EOF >> /etc/profile.d/http_proxy.sh
+proxy:
+  http_proxy: ${HTTP_PROXY}
+  https_proxy: ${HTTPS_PROXY}
+EOF
+fi
 
 if [[ ! -d "$HOME/workspace/deployments/microbosh/deployments" ]]; then
   bosh bootstrap deploy

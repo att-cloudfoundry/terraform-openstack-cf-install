@@ -45,3 +45,5 @@ assure_string_in_file $filename_provision 'CF_BOSHWORKSPACE_VERSION=${10}' "CF_B
 assure_string_in_file $filename_provision 'CF_DOMAIN=${11}' "CF_DOMAIN=\"$(terraform output cf_domain)\""
 assure_string_in_file $filename_provision 'DOCKER_SUBNET=${12}' "DOCKER_SUBNET=\"$(terraform output docker_subnet)\""
 assure_string_in_file $filename_provision 'INSTALL_DOCKER=${13}' "INSTALL_DOCKER=\"$(terraform output install_docker_services)\""
+assure_string_in_file $filename_provision 'HTTP_PROXY=${14}' "HTTP_PROXY=\"$(terraform output http_proxy)\""
+assure_string_in_file $filename_provision 'HTTPS_PROXY=${15}' "HTTPS_PROXY=\"$(terraform output https_proxy)\""
